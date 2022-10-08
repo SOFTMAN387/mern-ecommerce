@@ -1,0 +1,129 @@
+        .detais-container {
+            display: flex;
+            flex-direction: column;
+            padding: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .img-div {
+            flex: 1;
+        }
+        
+        .img-url {
+            width: 100%;
+            height: 50vh;
+            object-fit: cover;
+        }
+        
+        .detais-div {
+            flex: 1;
+            padding: 0px 50px;
+            font-weight: 200;
+        }
+        
+        .options-menu {
+            display: flex;
+            margin: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .filter {
+            padding: 6px;
+        }
+        
+        .white {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgb(238, 223, 223);
+        }
+        
+        .black {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgb(15, 15, 15);
+        }
+        
+        .silver {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: silver
+        }
+        
+        .golden {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(218, 199, 32, 0.87)
+        }
+        
+        .inc-dec-btn {
+            width: 10px;
+            height: 10px;
+            background-color: rgb(238, 226, 226);
+            padding: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        
+        .inc-dec {
+            display: flex;
+            margin: 5px;
+            font-size: 15px;
+            justify-content: space-between;
+        }
+        
+        .addtocart {
+            border: none;
+            background-color: teal;
+            color: white;
+            padding: 5px 10px
+        }
+        
+        @media (max-width: 800px) {
+            .detais-container {
+                padding: 10px;
+                margin: 10px;
+            }
+            .detais-div {
+                padding: 0px 20px;
+                font-weight: 200;
+                font-size: 15px;
+            }
+            .detais-div h1,
+            h3 {
+                font-weight: 200;
+                font-size: 20px;
+            }
+            .img-url {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
+            .options-menu {
+                margin: 5px;
+                font-size: 10px;
+            }
+            .options-menu span {
+                font-size: 10px;
+                margin: 0px 5px;
+            }
+            .inc-dec-btn {
+                width: 8px;
+                height: 8px;
+                padding: 5px;
+                margin: 5px;
+                font-size: 17px;
+            }
+            .inc-dec button {
+                margin: 2px;
+                font-size: 10px;
+                justify-content: space-between;
+                border: none;
+                padding: 5px;
+            }
+        }
