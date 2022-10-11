@@ -10,37 +10,37 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
- import Topbar from "../../admin/src/components/topbar/Topbar";
- import Sidebar from "../../admin/src/components/sidebar/Sidebar";
- //import {useSelector} from "react-redux"
+import Topbar from "../../admin/src/components/topbar/Topbar";
+import Sidebar from "../../admin/src/components/sidebar/Sidebar";
+//import {useSelector} from "react-redux"
 
 function App() {
- // const user = true;
-//  const admin=useSelector(state=>state.user.currentUser);
-//  const isAdmin=admin && admin.isAdmin;
-//console.log(isAdmin);
+  // const user = true;
+  const admin = useSelector(state => state.user.currentUser);
+  const isAdmin = admin && admin.isAdmin;
+  //console.log(isAdmin);
   return (
-   <>
-   <Topbar />
-   <div className="container">
-   <Sidebar />
-   <Routes> 
-    <Route exact path="/" element={<Home />} />
-    <Route exact path="/login" element={<Login />} />
-    <Route exact path="/users" element={<UserList />} />
-    <Route exact path="/user/:userId" element={<User />} />
-    <Route exact path="/products" element={<ProductList />} />
-    <Route exact path="/product/:productId" element={<Product />} />
-    <Route exact path="/newproduct" element={<NewProduct />} />
-    <Route exact path="/newUser" element={<NewUser />} />
+    <>
+      <Topbar />
+      <div className="container">
+        <Sidebar />
+        <Routes>
+          <Route exact path="/" element={!isAdmin === true ? <Login /> : <Home />} />
+          <Route exact path="/login" element={!isAdmin === true ? <Login /> : <Home />} />
+          <Route exact path="/users" element={!isAdmin === true ? <Login /> : <UserList />} />
+          <Route exact path="/user/:userId" element={!isAdmin === true ? <Login /> : <User />} />
+          <Route exact path="/products" element={!isAdmin === true ? <Login /> : <ProductList />} />
+          <Route exact path="/product/:productId" element={!isAdmin === true ? <Login /> : <Product />} />
+          <Route exact path="/newproduct" element={!isAdmin === true ? <Login /> : <NewProduct />} />
+          <Route exact path="/newUser" element={!isAdmin === true ? <Login /> : <NewUser />} />
 
-  </Routes>
-   </div>  
-   
-   
+        </Routes>
+      </div>
 
-   </>
-    
+
+
+    </>
+
     // <Router>
     //   <Topbar />
     //   <div className="container">
