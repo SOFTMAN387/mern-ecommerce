@@ -12,20 +12,20 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
  import Topbar from "../../admin/src/components/topbar/Topbar";
  import Sidebar from "../../admin/src/components/sidebar/Sidebar";
- import {useSelector} from "react-redux"
+ //import {useSelector} from "react-redux"
 
 function App() {
  // const user = true;
- const admin=useSelector(state=>state.user.currentUser);
- const isAdmin=admin && admin[0];
-console.log(isAdmin);
+//  const admin=useSelector(state=>state.user.currentUser);
+//  const isAdmin=admin && admin.isAdmin;
+//console.log(isAdmin);
   return (
    <>
    <Topbar />
    <div className="container">
    <Sidebar />
    <Routes> 
-    <Route exact path="/" element={!isAdmin===true?<Login/>:<Home />} />
+    <Route exact path="/" element={<Home />} />
     <Route exact path="/login" element={<Login />} />
     <Route exact path="/users" element={<UserList />} />
     <Route exact path="/user/:userId" element={<User />} />

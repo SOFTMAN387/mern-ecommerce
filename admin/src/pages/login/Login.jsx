@@ -26,7 +26,7 @@ export default function Login() {
         try {
 
             const res = await axios.post("http://localhost:8000/api/auth/login", credentials);
-            if (res.data === "User Not Found !!.." || res.data === "OOps ! Invalid Credentials...") {
+            if (res.data === "User Not Found !!.." || res.data === "OOps ! Invalid Credential...") {
                 dispatch(loginFailure());
                 setLoginErr(true);
                 navigate("/login");
@@ -44,8 +44,11 @@ export default function Login() {
     };
     return (
         <div className="home">
+
             <div className="login-div">
+
                 <div className="loginContainer">
+                    <h2 className="login-title">Admin Login !</h2>
                     <input
                         type="email"
                         placeholder="username"
@@ -67,7 +70,7 @@ export default function Login() {
                         Login
                     </button>
                     {/* {loginErr && <span>loginErr</span>} */}
-                    {loginErr ? <span style={{ color: "red" }}>Wrong Credentials !!...</span> : <span></span>}
+                    {loginErr ? <span style={{ color: "red" }}>Only Admin Can Login !!...</span> : <span></span>}
                     <div>
 
                     </div>

@@ -13,6 +13,7 @@ router.post("/register", async(req, res) => {
             req.body.password,
             process.env.PASS_SECRET_KEY
         ).toString(),
+        img: req.body.img,
     });
     try {
         const saveUser = await newUser.save();
@@ -50,7 +51,7 @@ router.post("/login", async(req, res) => {
                     // // expires works the same as the maxAge
                     // expires: new Date('01 12 2021'),
                     // secure: true,
-                    httpOnly: true
+                    httpOnly: true,
                 });
                 // const tkn = req.cookies.verifyToken;
                 // console.log("Cookies:--- ", req.cookies);
@@ -58,12 +59,11 @@ router.post("/login", async(req, res) => {
                 // console.log(regEmail);
                 console.log(" Login Success!..");
                 res.status(200).json(regEmail);
-
             } else {
-                res.status(200).json(" OOps ! Invalid Credential...");
+                res.status(200).json("OOps ! Invalid Credential...");
             }
         } else {
-            res.status(200).json("OOps ! Invalid Credentials...");
+            res.status(200).json("OOps ! Invalid Credential...");
         }
     } catch (error) {
         console.log(error);

@@ -4,9 +4,19 @@ const { authToken } = require("./verifyToken");
 const User = require("../models/Users");
 const router = require("express").Router();
 
+// GET ALL USERS..............................................
+
+router.get("/getuser", async(req, res) => {
+    try {
+        const getAllUsers = await User.find();
+        res.status(200).json(getAllUsers);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
 
 //Update user.By id......................
-router.put("/update/:id", authToken, async(req, res) => {
+router.put("/update/:id", async(req, res) => {
     if (req.body.password) {
         try {
             req.body.password = CryptoJs.AES.encrypt(
@@ -25,15 +35,14 @@ router.put("/update/:id", authToken, async(req, res) => {
     }
 });
 
-
 //Get  user By Id..............................
-router.get("/getuser/:id", authToken, async(req, res) => {
+router.get("/getuser/:id", async(req, res) => {
     try {
         const getUser = await User.findById(req.params.id);
         if (getUser) {
             res.status(200).json(getUser);
         } else {
-            res.status(203).json(`user ${ req.params.id }
+            res.status(203).json(`user ${req.params.id}
                             Not Found!...
                             `);
         }
@@ -41,7 +50,6 @@ router.get("/getuser/:id", authToken, async(req, res) => {
         res.status(500).json(error);
     }
 });
-
 
 //Delete user.By ID...........................
 router.delete("/delete/:id", authToken, async(req, res) => {
@@ -59,22 +67,5 @@ router.delete("/delete/:id", authToken, async(req, res) => {
         res.status(500).json(error);
     }
 });
-
-
-//GET ALL USERS..............................................
-
-router.get("/getuser", authToken, async(req, res) => {
-    try {
-        const getAllUsers = await User.find();
-        res.status(200).json(getAllUsers);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-});
-
-
-
-
-
 
 module.exports = router;

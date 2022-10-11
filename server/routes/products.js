@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 //Create Products.................
 
-router.post("/create", authToken, async(req, res) => {
+router.post("/create", async(req, res) => {
     const newProduct = await Product(req.body);
     try {
         const saveProducts = await newProduct.save();
@@ -15,7 +15,7 @@ router.post("/create", authToken, async(req, res) => {
 });
 
 //Update Product.By id......................
-router.put("/update/:id", authToken, async(req, res) => {
+router.put("/update/:id", async(req, res) => {
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id, {
@@ -48,7 +48,7 @@ router.delete("/delete/:id", authToken, async(req, res) => {
     try {
         const ProductDeleted = await Product.findByIdAndDelete(req.params.id);
         if (ProductDeleted) {
-            res.status(200).json(` Product ${ req.params.id }deleted... `);
+            res.status(200).json(` Product ${req.params.id}deleted... `);
         } else {
             res.status(203).json("something went wrong...");
         }
@@ -72,7 +72,6 @@ router.get("/getproduct", async(req, res) => {
                 categories: {
                     $in: [qCategory],
                 },
-
             });
             res.status(200).json(products);
         } else {

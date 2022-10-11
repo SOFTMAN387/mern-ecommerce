@@ -8,8 +8,80 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import "./user.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function User() {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  //console.log(id);
+  const [users, setUsers] = useState([]);
+  const [admin, setAdmin] = useState("");
+  const [Err, setErr] = useState(false);
+
+  const [updateData, setUpdateData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    img: '',
+    isAdmin: '',
+  });
+  const handleChange = (e) => {
+    setUpdateData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+
+      const res = await axios.put(`http://localhost:8000/api/users/update/${id}`, updateData);
+      if (res && updateData) {
+        navigate("/users");
+
+      } else {
+
+        navigate(`/user/${id}`);
+        setErr(true);
+
+      }
+
+    } catch (err) {
+      console.log(err);
+      setErr(true);
+
+    }
+  };
+
+
+
+  useEffect(() => {
+
+    const getData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/api/users/getuser/${id}`);
+        if (res.data) {
+          setUsers(res.data);
+          setAdmin(res.data.isAdmin);
+          //  console.log(res.data.isAdmin);
+
+        } else {
+          console.log("Users are not available...");
+        }
+      } catch (error) {
+        console.log("Users  not Found!...");
+
+      }
+    }
+    getData();
+
+  }, [id])
+
+  //console.log(users.isAdmin)
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -22,12 +94,12 @@ export default function User() {
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-              alt=""
+              src={users.img}
+              alt="userImg"
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Anna Becker</span>
+              <span className="userShowUsername">{users.username}</span>
               <span className="userShowUserTitle">Software Engineer</span>
             </div>
           </div>
@@ -52,7 +124,7 @@ export default function User() {
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">New York | USA</span>
+              <span className="userShowInfoTitle">India |Patna</span>
             </div>
           </div>
         </div>
@@ -64,15 +136,7 @@ export default function User() {
                 <label>Username</label>
                 <input
                   type="text"
-                  placeholder="annabeck99"
-                  className="userUpdateInput"
-                />
-              </div>
-              <div className="userUpdateItem">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Anna Becker"
+                  placeholder={users.username} name="username" onChange={handleChange}
                   className="userUpdateInput"
                 />
               </div>
@@ -80,24 +144,32 @@ export default function User() {
                 <label>Email</label>
                 <input
                   type="text"
-                  placeholder="annabeck99@gmail.com"
-                  className="userUpdateInput"
+                  placeholder={users.email}
+                  className="userUpdateInput" name="email" onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Phone</label>
+                <label>Password</label>
                 <input
-                  type="text"
-                  placeholder="+1 123 456 67"
-                  className="userUpdateInput"
+                  type="password"
+                  placeholder={users.password}
+                  className="userUpdateInput" name="password" onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Address</label>
+                <label>ImageUrl</label>
                 <input
                   type="text"
-                  placeholder="New York | USA"
-                  className="userUpdateInput"
+                  placeholder={users.img}
+                  className="userUpdateInput" name="img" onChange={handleChange}
+                />
+              </div>
+              <div className="userUpdateItem">
+                <label>Admin :</label>
+                <input
+                  type="text"
+                  placeholder={admin.toString()}
+                  className="userUpdateInput" name="isAdmin" onChange={handleChange}
                 />
               </div>
             </div>
@@ -105,17 +177,20 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                  alt=""
+                  src={users.img}
+                  alt="userImg"
                 />
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button className="userUpdateButton" onClick={handleClick}>Update</button>
+
             </div>
+            {Err === true ? <span style={{ color: 'red', textAlign: 'center' }}>Something Went Wrong !..</span> : <span></span>}
           </form>
+
         </div>
       </div>
     </div>
